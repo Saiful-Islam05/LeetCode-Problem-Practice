@@ -10,38 +10,28 @@
  */
 class Solution {
 public:
-
-    int findFullLength(ListNode* head)
-    {
-        int cnt = 0;
-
-        while(head!=nullptr)
-        {
-            head = head->next;
-            cnt++;
-        }
-
-        return cnt;
-    }
-
     ListNode* removeNthFromEnd(ListNode* head, int n) {
 
-        int length = findFullLength(head);
-        length-=n;
+     ListNode* parent = new ListNode(-1);
+     parent->next = head;
 
-        ListNode* parent = new ListNode(-1);
-        parent->next = head;
-        ListNode* prev = parent;
+     ListNode* prev = parent;
+     ListNode* slow = parent;
+     ListNode* fast = parent;
 
-        for(int i=0;i<length;i++)
-        {
-            prev = prev->next;
-        }
+     for(int i=1;i<=n+1;i++)
+     {
+        fast = fast->next;
+     }
 
-        prev->next = prev->next->next;
+     while(fast!=nullptr)
+     {
+        fast = fast->next;
+        slow = slow->next;
+     }
 
-        return parent->next;
+     slow->next = slow->next->next;
 
-
+     return parent->next;
     }
 };
